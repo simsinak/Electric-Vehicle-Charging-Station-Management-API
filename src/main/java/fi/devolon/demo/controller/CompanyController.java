@@ -9,7 +9,9 @@ import fi.devolon.demo.service.CompanyService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -40,12 +42,20 @@ public class CompanyController {
         companyService.deleteEntityByID(id);
     }
     @PutMapping("/companies/{id}")
-    public Company updateCompany(@RequestBody Company company,@PathVariable long id){
-        return companyService.updateEntity(company , id);
+    public void updateCompany(@Validated @RequestBody Company company,@PathVariable long id, HttpServletResponse response) throws IOException{
+        company =  companyService.updateEntity(company , id);
+        response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+        new ObjectMapper().registerModule(new SimpleModule().addSerializer(company.getClass(),new SingleCompanySerializer())).writeValue(response.getWriter() , company);
+
     }
-    @PostMapping("/companies/")
-    public Company newCompany(@RequestBody Company company){
-        return companyService.save(company);
+    @PostMapping("/companies")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void newCompany(@Validated @RequestBody Company company, HttpServletResponse response)  throws IOException{
+        company =companyService.save(company);
+        response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+        new ObjectMapper().registerModule(new SimpleModule().addSerializer(company.getClass(),new SingleCompanySerializer())).writeValue(response.getWriter() , company);
+
     }
+
 
 }

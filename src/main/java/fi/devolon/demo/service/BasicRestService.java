@@ -4,13 +4,13 @@ package fi.devolon.demo.service;
 
 public interface BasicRestService<T> {
 
-    T save(T company);
+    T save(T entity);
 
     Iterable<T> getAllEntities();
 
-    T getEntityByID(long id);
+    T getEntityByID(Long id);
 
-    void deleteEntityByID(long id);
+    void deleteEntityByID(Long id);
 
     T updateEntity(T entity, Long id);
 }
