@@ -73,8 +73,8 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
         return getErrorResponse(HttpStatus.CONFLICT,"Values Are Duplicated");
     }
 
-    @ExceptionHandler(MissingValueException.class)
-    public final  ResponseEntity<Object> missingValueHandler(MissingValueException ex) {
+    @ExceptionHandler({MissingValueException.class,NumberFormatException.class,IllegalArgumentException.class})
+    public final  ResponseEntity<Object> missingValueHandler(RuntimeException ex) {
         return getErrorResponse(HttpStatus.BAD_REQUEST,ex.getMessage());
     }
     private ResponseEntity<Object> getErrorResponse(HttpStatus status, String message){

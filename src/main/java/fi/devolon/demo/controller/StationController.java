@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 @RequestMapping("/api")
@@ -43,6 +45,12 @@ public class StationController {
     @ResponseStatus(HttpStatus.CREATED)
     public Station newStation(@Validated @RequestBody Station station){
         return stationService.save(station);
+    }
+
+    @PatchMapping("/stations/{id}")
+    @JsonView(View.Station.class)
+    public Station patchStation(@RequestBody Map<String, String> map, @PathVariable long id){
+        return stationService.patchEntity(map,id);
     }
 
 

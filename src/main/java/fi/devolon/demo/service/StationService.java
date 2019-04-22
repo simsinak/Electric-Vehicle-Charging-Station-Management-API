@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolationException;
+import java.util.Map;
 import java.util.Optional;
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -60,5 +62,37 @@ public class StationService implements BasicRestService<Station> {
             System.out.println(stn.getLongitude());
             return stationRepository.save(stn);})
                 .orElseThrow(()-> new StationNotFoundException(id));
+    }
+
+    public Station patchEntity(Map<String,String> map, Long id){
+        System.out.println("yessss");
+                Station station=getEntityByID(id);
+                String name = map.get("name");
+                String latitude = map.get("latitude");
+                String longitude = map.get("longitude");
+                if (name != null)
+                    if (name.length()>1) station.setName(name);
+                    else throw new IllegalArgumentException("Station Name Must be Greater Than One Character");
+                if (latitude != null){
+                    try {
+                        double latitudeDoubleValue = Double.parseDouble(latitude);
+                        if (!(latitudeDoubleValue >= -90 && latitudeDoubleValue <= +90)) throw new NumberFormatException();
+                        station.setLatitude(latitudeDoubleValue);
+                    }catch (NumberFormatException ex){
+                        throw new NumberFormatException("parameter values are not correct");
+                    }
+                }
+                if (longitude != null){
+                    try {
+                        double longitudeDoubleValue = Double.parseDouble(latitude);
+                        if (!(longitudeDoubleValue >= -180 && longitudeDoubleValue <= +180)) throw new NumberFormatException();
+                        station.setLongitude(longitudeDoubleValue);
+                    }catch (NumberFormatException ex){
+                        throw new NumberFormatException("Parameter Values Are Not Correct");
+                    }
+                }
+                return stationRepository.save(station);
+
+
     }
 }
