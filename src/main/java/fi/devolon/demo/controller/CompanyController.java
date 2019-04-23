@@ -65,7 +65,7 @@ public class CompanyController {
     }
     @GetMapping("/companies/{id}/stations")
     @JsonView(View.Company.ChildStations.class)
-    public Company getAllChildsStations(@PathVariable long id){
+    public Company getAllChildrenStations(@PathVariable long id){
         return companyService.getEntityByID(id);
     }
 

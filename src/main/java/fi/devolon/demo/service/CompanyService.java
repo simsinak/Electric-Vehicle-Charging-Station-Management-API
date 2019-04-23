@@ -36,8 +36,8 @@ public class CompanyService implements BasicRestService<Company>{
     @Override
     public Company getEntityByID(Long id) {
         if(id==null) throw new MissingValueException("company id must not be null");
-        Optional<Company> optionlCompany= companyRepository.findById(id);
-        return optionlCompany.orElseThrow(()-> new CompanyNotFoundException(id));
+        Optional<Company> optionalCompany= companyRepository.findById(id);
+        return optionalCompany.orElseThrow(()-> new CompanyNotFoundException(id));
     }
 
     @Override

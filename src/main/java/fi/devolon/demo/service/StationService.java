@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -67,7 +66,6 @@ public class StationService implements BasicRestService<Station> {
     }
 
     public Station patchEntity(Map<String,String> map, Long id){
-        System.out.println("yessss");
                 Station station=getEntityByID(id);
                 String name = map.get("name");
                 String latitude = map.get("latitude");

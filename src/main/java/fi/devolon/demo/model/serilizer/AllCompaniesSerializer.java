@@ -30,7 +30,7 @@ public class AllCompaniesSerializer extends JsonSerializer<Iterable> {
                     stationTemp.put("id",x.getId());
                     stationTemp.put("name",x.getName());
                     stationTemp.put("latitude",x.getLatitude());
-                    stationTemp.put("longtitude",x.getLongitude());
+                    stationTemp.put("longitude",x.getLongitude());
                     stationsData.add(stationTemp);
                 });
                 Object[] stationsArray = new Object[stationsData.size()];

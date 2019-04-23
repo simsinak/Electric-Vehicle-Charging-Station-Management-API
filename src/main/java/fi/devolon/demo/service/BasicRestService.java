@@ -3,7 +3,7 @@ package fi.devolon.demo.service;
 
 import org.springframework.data.domain.Page;
 
-public interface BasicRestService<T> {
+interface BasicRestService<T> {
 
     T save(T entity);
 

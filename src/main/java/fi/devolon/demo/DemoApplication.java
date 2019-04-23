@@ -26,16 +26,16 @@ public class DemoApplication {
     @Bean
     public CommandLineRunner fillData(StationRepository stationRepository,CompanyRepository companyRepository){
         return args -> {
-            Company company=new Company("simsinak");
-            Company company1=new Company("goodby");
+            Company company=new Company("Simsinak");
+            Company company1=new Company("goodbye");
             Company company2=new Company("franks");
             Company company3=new Company("amazon");
-            Set<Company>  childs1 = Stream.of(company1 , company2).collect(Collectors.toSet());
-            Set<Company>  childs2 = Stream.of(company3).collect(Collectors.toSet());
-            company.setSubCompanies(childs1);
+            Set<Company>  children1 = Stream.of(company1 , company2).collect(Collectors.toSet());
+            Set<Company>  children2 = Stream.of(company3).collect(Collectors.toSet());
+            company.setSubCompanies(children1);
             company1.setParentCompany(company);
             company2.setParentCompany(company);
-            company2.setSubCompanies(childs2);
+            company2.setSubCompanies(children2);
             company3.setParentCompany(company2);
 
             Station station=new Station("A" , 35.714242 , 51.372921);
