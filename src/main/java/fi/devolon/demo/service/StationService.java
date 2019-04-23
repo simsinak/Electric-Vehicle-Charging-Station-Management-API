@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import javax.validation.ConstraintViolationException;
 import java.util.Map;
 import java.util.Optional;
 @Service
@@ -94,5 +93,8 @@ public class StationService implements BasicRestService<Station> {
                 return stationRepository.save(station);
 
 
+    }
+    public Iterable<Station> findAllStationsFromLocationWithDistance(double latitude,double longitude ,double distance){
+        return stationRepository.findAllStationsFromLocationWithDistance(latitude, longitude, distance);
     }
 }

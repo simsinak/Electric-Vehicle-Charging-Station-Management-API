@@ -10,10 +10,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 import java.util.Map;
 
 @RestController
 @AllArgsConstructor(onConstructor = @__(@Autowired))
+@Validated
 @RequestMapping("/api")
 public class StationController {
 
@@ -37,13 +42,13 @@ public class StationController {
     }
     @PutMapping("/stations/{id}")
     @JsonView(View.Station.class)
-    public Station updateStation(@Validated @RequestBody Station station, @PathVariable long id){
+    public Station updateStation(@Valid @RequestBody Station station, @PathVariable long id){
         return stationService.updateEntity(station , id);
     }
     @PostMapping("/stations")
     @JsonView(View.Station.class)
     @ResponseStatus(HttpStatus.CREATED)
-    public Station newStation(@Validated @RequestBody Station station){
+    public Station newStation(@Valid @RequestBody Station station){
         return stationService.save(station);
     }
 
@@ -51,6 +56,13 @@ public class StationController {
     @JsonView(View.Station.class)
     public Station patchStation(@RequestBody Map<String, String> map, @PathVariable long id){
         return stationService.patchEntity(map,id);
+    }
+    @GetMapping("/stations/around")
+    @JsonView(View.StationWithDistance.class)
+    public Iterable<Station> getAroundStations(@RequestParam(name = "latitude",defaultValue = "0") @NotNull @DecimalMin(value = "-90", message = "latitude must be greater than or equal to -90") @DecimalMax(value = "+90", message = "latitude must be less than or equal to +90") double slat,
+                                           @RequestParam(name = "longitude",defaultValue = "0")    @NotNull @DecimalMin(value = "-180" , message = "longitude must be greater than or equal to -180") @DecimalMax(value = "+180" , message = "longitude must be less than or equal to +180") double slon,
+                                           @RequestParam(name = "distance",defaultValue = "0") @NotNull  double dist){
+        return stationService.findAllStationsFromLocationWithDistance(slat, slon , dist);
     }
 
 
