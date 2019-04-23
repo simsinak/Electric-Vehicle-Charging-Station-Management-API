@@ -84,7 +84,7 @@ public class StationService implements BasicRestService<Station> {
                 }
                 if (longitude != null){
                     try {
-                        double longitudeDoubleValue = Double.parseDouble(latitude);
+                        double longitudeDoubleValue = Double.parseDouble(longitude);
                         if (!(longitudeDoubleValue >= -180 && longitudeDoubleValue <= +180)) throw new NumberFormatException();
                         station.setLongitude(longitudeDoubleValue);
                     }catch (NumberFormatException ex){
