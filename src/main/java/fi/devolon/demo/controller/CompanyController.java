@@ -1,10 +1,12 @@
 package fi.devolon.demo.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import fi.devolon.demo.model.Company;
 import fi.devolon.demo.model.serilizer.AllCompaniesSerializer;
 import fi.devolon.demo.model.serilizer.SingleCompanySerializer;
+import fi.devolon.demo.model.serilizer.View;
 import fi.devolon.demo.service.CompanyService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +57,11 @@ public class CompanyController {
         response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         new ObjectMapper().registerModule(new SimpleModule().addSerializer(company.getClass(),new SingleCompanySerializer())).writeValue(response.getWriter() , company);
 
+    }
+    @GetMapping("/companies/{id}/stations")
+    @JsonView(View.Company.ChildStations.class)
+    public Company getAllChildsStations(@PathVariable long id){
+        return companyService.getEntityByID(id);
     }
 
 

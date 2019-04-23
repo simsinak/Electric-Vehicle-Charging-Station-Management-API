@@ -20,27 +20,27 @@ public class Station {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView(View.Station.class)
+    @JsonView({View.Station.class,View.Company.ChildStations.class})
     Long id;
 
     @NotNull
     @Size(min = 1)
     @EqualsAndHashCode.Include
-    @JsonView(View.Station.class)
+    @JsonView({View.Station.class,View.Company.ChildStations.class})
     String name;
 
     @NotNull
     @DecimalMin("-90")
     @DecimalMax("+90")
     @EqualsAndHashCode.Include
-    @JsonView(View.Station.class)
+    @JsonView({View.Station.class,View.Company.ChildStations.class})
     Double latitude;
 
     @NotNull
     @DecimalMin("-180")
     @DecimalMax("+180")
     @EqualsAndHashCode.Include
-    @JsonView(View.Station.class)
+    @JsonView({View.Station.class,View.Company.ChildStations.class})
     Double longitude;
 
     @NotNull
@@ -51,7 +51,6 @@ public class Station {
 
     @Transient
     @JsonView(View.StationWithDistance.class)
-
     double distance;
 
 
