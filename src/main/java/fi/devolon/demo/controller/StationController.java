@@ -1,14 +1,20 @@
 package fi.devolon.demo.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import fi.devolon.demo.exceptions.ResourceNotFoundException;
 import fi.devolon.demo.model.Station;
 import fi.devolon.demo.model.serilizer.View;
 import fi.devolon.demo.service.StationService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import javax.validation.constraints.DecimalMax;
@@ -27,8 +33,12 @@ public class StationController {
 
     @GetMapping("/stations")
     @JsonView(View.Station.class)
-    public Iterable<Station> getAllStations()  {
-        return stationService.getAllEntities();
+    public ResponseEntity<Iterable<Station>> getAllStations(@RequestParam(name = "page",defaultValue = "0") int page, @RequestParam(name = "limit",defaultValue = "30") int limit , UriComponentsBuilder uriComponentsBuilder)  {
+        Page<Station> stations = stationService.getAllEntities(page,limit);
+        if (page >= stations.getTotalPages()) throw new ResourceNotFoundException("Resource Not Found");
+        HttpHeaders headers=new HttpHeaders();
+        headers.add(HttpHeaders.LINK,ControllerUtility.linkMaker(uriComponentsBuilder,limit,stations));
+        return ResponseEntity.ok().headers(headers).body(stations.getContent());
     }
 
     @GetMapping("/stations/{id}")

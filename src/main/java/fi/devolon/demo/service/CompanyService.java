@@ -6,6 +6,8 @@ import fi.devolon.demo.model.Company;
 import fi.devolon.demo.repository.CompanyRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -27,8 +29,8 @@ public class CompanyService implements BasicRestService<Company>{
     }
 
     @Override
-    public Iterable<Company> getAllEntities() {
-        return companyRepository.findAll();
+    public Page<Company> getAllEntities(int page,int limit) {
+         return companyRepository.findAll(PageRequest.of(page,limit));
     }
 
     @Override

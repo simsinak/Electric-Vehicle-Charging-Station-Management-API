@@ -8,6 +8,9 @@ import fi.devolon.demo.repository.StationRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -28,8 +31,8 @@ public class StationService implements BasicRestService<Station> {
     }
 
     @Override
-    public Iterable<Station> getAllEntities() {
-        return stationRepository.findAll();
+    public Page<Station> getAllEntities(int page,int limit) {
+        return stationRepository.findAll(PageRequest.of(page,limit));
     }
 
     @Override

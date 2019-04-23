@@ -2,6 +2,7 @@ package fi.devolon.demo.controller;
 
 import fi.devolon.demo.exceptions.CompanyNotFoundException;
 import fi.devolon.demo.exceptions.MissingValueException;
+import fi.devolon.demo.exceptions.ResourceNotFoundException;
 import fi.devolon.demo.exceptions.StationNotFoundException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -51,7 +52,7 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 
     }
 
-    @ExceptionHandler({CompanyNotFoundException.class,StationNotFoundException.class})
+    @ExceptionHandler({CompanyNotFoundException.class,StationNotFoundException.class, ResourceNotFoundException.class})
     public final  ResponseEntity<Object> handleNotFound(RuntimeException ex){
         return getErrorResponse(HttpStatus.NOT_FOUND,ex.getMessage());
 
