@@ -39,8 +39,6 @@ public class UIController {
     }
     @PostMapping(value = "/single-company")
     public String singleCompany(HttpServletRequest request, RedirectAttributes redirectAttributes,Model model , @RequestParam(name="id" , defaultValue = "0") int id) throws IOException {
-        System.out.println("idddd");
-        System.out.println(id);
         boolean result=companyService.getSingleCompany(request,model,redirectAttributes,id);
         if (result) {
             return "single-company";
@@ -48,5 +46,10 @@ public class UIController {
             return "redirect:/";
         }
     }
+    @PostMapping(value = "/delete-company")
+    public String deleteCompany(HttpServletRequest request, RedirectAttributes redirectAttributes , @RequestParam(name="id" , defaultValue = "0") int id) throws IOException {
+        companyService.deleteSingleCompany(request,redirectAttributes,id);
+        return "redirect:/";
 
+    }
 }

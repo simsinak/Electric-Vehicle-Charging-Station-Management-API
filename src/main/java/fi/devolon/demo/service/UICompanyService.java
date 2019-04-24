@@ -6,8 +6,7 @@ import fi.devolon.demo.controller.ControllerUtility;
 import fi.devolon.demo.model.Company;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.client.RestTemplate;
@@ -23,7 +22,7 @@ import java.util.List;
 public class UICompanyService {
 
     private final String getAllCompaniesURI="/api/companies?page={page}&limit={limit}";
-    private final String getSingleCompanyURI="/api/companies/{id}";
+    private final String singleCompanyURI="/api/companies/{id}";
     private final static String UNKNOWN_ERROR = "An Unknown Error Happened! Please Try Again Later.";
 
 
@@ -54,7 +53,7 @@ public class UICompanyService {
     }
 
     public boolean getSingleCompany(HttpServletRequest request,Model model , RedirectAttributes redirectAttributes , int id) throws IOException {
-        String uri = makeUrl(request,getSingleCompanyURI);
+        String uri = makeUrl(request,singleCompanyURI);
         ResponseEntity<String> response = restTemplate.getForEntity(uri , String.class, id);
         String responseText = response.getBody();
         if (response.getStatusCode()== HttpStatus.OK) {
@@ -66,6 +65,19 @@ public class UICompanyService {
             if (node!=null) redirectAttributes.addFlashAttribute("error",node.asText());
             else redirectAttributes.addFlashAttribute("error",UNKNOWN_ERROR);
             return false;
+        }
+
+    }
+    public void deleteSingleCompany(HttpServletRequest request, RedirectAttributes redirectAttributes , int id) throws IOException {
+        String uri = makeUrl(request,singleCompanyURI);
+        ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.DELETE,HttpEntity.EMPTY,String.class,id);
+        String responseText = response.getBody();
+        if (response.getStatusCode()== HttpStatus.OK) {
+            redirectAttributes.addFlashAttribute("error", "The Company Is Deleted If You Do Not Believe It Try to Retrieve It!");
+        }else {
+            JsonNode node = objectMapper.readTree(responseText).get("message");
+            if (node!=null) redirectAttributes.addFlashAttribute("error",node.asText());
+            else redirectAttributes.addFlashAttribute("error",UNKNOWN_ERROR);
         }
 
     }

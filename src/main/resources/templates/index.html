@@ -26,8 +26,8 @@
     <hr>
     <h2>Delete Company</h2>
 
-    <form class="form-inline">
-        <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Company ID" name="id" min="1">
+    <form class="form-inline" th:action="@{/delete-company}" method="post">
+        <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Company ID (0)" name="id" min="1">
         <button type="submit" class="btn btn-danger mb-2">Delete</button>
     </form>
 
