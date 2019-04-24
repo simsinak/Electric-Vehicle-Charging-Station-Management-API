@@ -34,7 +34,7 @@ public class CompanyController {
         Page<Company> companies= companyService.getAllEntities(page,limit);
         if (page >= companies.getTotalPages()) throw new ResourceNotFoundException("Resource Not Found");
         response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-        response.setHeader(HttpHeaders.LINK,ControllerUtility.linkMaker(uriComponentsBuilder,limit,companies , "companies"));
+        response.setHeader(HttpHeaders.LINK,ControllerUtility.linkMaker(uriComponentsBuilder,limit,companies , "api/companies"));
         new ObjectMapper().registerModule(new SimpleModule().addSerializer(companies.getContent().getClass(),new AllCompaniesSerializer())).writeValue(response.getWriter() , companies.getContent());
     }
 

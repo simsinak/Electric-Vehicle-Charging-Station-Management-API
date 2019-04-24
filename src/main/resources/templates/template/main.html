@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout (content)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/5.8.1/css/all.min.css}">
+    <title>main</title>
+
+</head>
+<body>
+<div class="container-fluid text-center align-items-center">
+    <div th:insert="template/header :: navbar"></div>
+    <div th:replace="${content}"></div>
+    <div th:insert="template/footer :: copyright"></div>
+</div>
+
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/1.14.7/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+</body>
+</html>

@@ -5,7 +5,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,5 +31,21 @@ public class ControllerUtility {
     private static String uriBuilder(UriComponents uri, String rel){
         return  "<"+uri.toUriString()+">; rel=\""+rel+"\"";
     }
+    public static List<String> findLinks(HttpHeaders header, String path){
+         List<String> foundedLinks= Arrays.asList(null , null);
+         List<String> values=header.get("Link");
+         if(values!=null){
+             String[] parts=values.get(0).split(",");
+             for(String value:parts){
+                 String[] tokens=value.split(";");
+                 if(tokens[1].trim().equals("rel=\"prev\"")){
+                     foundedLinks.set(0,path+tokens[0].substring(tokens[0].indexOf('?'),tokens[0].length()-1));
+                 }else if(tokens[1].trim().equals("rel=\"next\"")){
+                     foundedLinks.set(1,path+tokens[0].substring(tokens[0].indexOf("?"),tokens[0].length()-1));
+                 }
+             }
+         }
+         return foundedLinks;
 
+    }
 }

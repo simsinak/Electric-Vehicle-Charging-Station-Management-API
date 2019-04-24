@@ -1,5 +1,6 @@
 package fi.devolon.demo;
 
+import fi.devolon.demo.exceptions.RestTemplateErrorHandler;
 import fi.devolon.demo.model.Company;
 import fi.devolon.demo.model.Station;
 import fi.devolon.demo.repository.CompanyRepository;
@@ -8,6 +9,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.DefaultResponseErrorHandler;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -21,6 +24,15 @@ public class DemoApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
+    }
+
+
+
+    @Bean
+    public RestTemplate restTemplate(RestTemplateErrorHandler restTemplateErrorHandler){
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setErrorHandler(restTemplateErrorHandler);
+        return restTemplate;
     }
 
     @Bean

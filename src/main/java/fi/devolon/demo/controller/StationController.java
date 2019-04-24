@@ -36,7 +36,7 @@ public class StationController {
         Page<Station> stations = stationService.getAllEntities(page,limit);
         if (page >= stations.getTotalPages()) throw new ResourceNotFoundException("Resource Not Found");
         HttpHeaders headers=new HttpHeaders();
-        headers.add(HttpHeaders.LINK,ControllerUtility.linkMaker(uriComponentsBuilder,limit,stations , "stations"));
+        headers.add(HttpHeaders.LINK,ControllerUtility.linkMaker(uriComponentsBuilder,limit,stations , "api/stations"));
         return ResponseEntity.ok().headers(headers).body(stations.getContent());
     }
 
