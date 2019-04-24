@@ -1,13 +1,18 @@
 package fi.devolon.demo.controller;
 
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-class ControllerUtility {
-     static <T>String linkMaker(UriComponentsBuilder uriComponentsBuilder, int limit , Page<T> pageResult){
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class ControllerUtility {
+     static <T>String linkMaker(UriComponentsBuilder uriComponentsBuilder, int limit , Page<T> pageResult, String path){
         final StringBuilder stringBuilder=new StringBuilder();
-        stringBuilder.append(uriBuilder(uriComponentsBuilder.replaceQueryParam("page","0").replaceQueryParam("limit",limit).build(),"first"));
+        stringBuilder.append(uriBuilder(uriComponentsBuilder.path(path).replaceQueryParam("page","0").replaceQueryParam("limit",limit).build(),"first"));
         stringBuilder.append(",");
         stringBuilder.append(uriBuilder(uriComponentsBuilder.replaceQueryParam("page",pageResult.getNumber()).replaceQueryParam("limit",limit).build(),"self"));
         stringBuilder.append(",");
@@ -27,4 +32,5 @@ class ControllerUtility {
     private static String uriBuilder(UriComponents uri, String rel){
         return  "<"+uri.toUriString()+">; rel=\""+rel+"\"";
     }
+
 }
