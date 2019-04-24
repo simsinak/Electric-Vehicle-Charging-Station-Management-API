@@ -37,5 +37,16 @@ public class UIController {
             return "redirect:/";
         }
     }
+    @PostMapping(value = "/single-company")
+    public String singleCompany(HttpServletRequest request, RedirectAttributes redirectAttributes,Model model , @RequestParam(name="id" , defaultValue = "0") int id) throws IOException {
+        System.out.println("idddd");
+        System.out.println(id);
+        boolean result=companyService.getSingleCompany(request,model,redirectAttributes,id);
+        if (result) {
+            return "single-company";
+        }else {
+            return "redirect:/";
+        }
+    }
 
 }

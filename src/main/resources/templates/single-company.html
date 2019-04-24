@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{template/main :: layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Single Company</title>
+</head>
+<body>
+<section>
+    <h1>Company Info</h1>
+    <br>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Company ID</th>
+            <th>Compny Name</th>
+            <th>Super Company ID</th>
+            <th>Super Company Name</th>
+        </tr>
+        </thead>
+            <tbody>
+            <tr>
+                <th scope="row" th:text="${company.id}">1</th>
+                <td th:text="${company.name}">Name</td>
+                <td th:text="${company.parentCompany} ? ${company.parentCompany.id} : 'No Super Company'">id</td>
+                <td th:text="${company.parentCompany} ? ${company.parentCompany.name} : 'No Super Company'">Name</td>
+            </tr>
+            </tbody>
+    </table>
+    <hr>
+    <h1>Direct Sub Companies Info</h1>
+    <br>
+    <div th:if="${company.subCompanies.size()!=0}">
+        <table class="table table-striped table-hover table-dark">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+            </tr>
+            </thead>
+            <div th:each="subCompany : ${company.subCompanies}">
+                <tbody>
+                <tr>
+                    <th scope="row" th:text="${subCompany.id}">1</th>
+                    <td th:text="${subCompany.name}">Name</td>
+                </tr>
+                </tbody>
+            </div>
+        </table>
+    </div>
+    <div th:unless="${company.subCompanies.size()!=0}">
+        <span>No Sub Company!</span>
+    </div>
+    <hr>
+    <h1>Direct Stations Info</h1>
+    <br>
+    <div th:if="${company.stations.size()!=0}">
+        <table class="table table-striped table-hover table-dark">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+            </tr>
+            </thead>
+            <div th:each="station : ${company.stations}">
+                <tbody>
+                <tr>
+                    <th scope="row" th:text="${station.id}">1</th>
+                    <td th:text="${station.name}">Name</td>
+                    <td th:text="${station.latitude}">Name</td>
+                    <td th:text="${station.longitude}">Name</td>
+                </tr>
+                </tbody>
+            </div>
+        </table>
+    </div>
+    <div th:unless="${company.stations.size()!=0}">
+        <span>No Station!</span>
+    </div>
+
+    <hr>
+    <form method="get" action="/">
+        <button type="submit" class="btn btn-link">go to home</button>
+    </form>
+
+
+</section>
+</body>
+</html>

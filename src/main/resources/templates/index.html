@@ -17,10 +17,10 @@
     </form>
 
     <hr>
-    <h2>Show Specific Compny</h2>
+    <h2>Show Specific Company</h2>
 
-    <form class="form-inline">
-        <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Company ID" name="id" min="1">
+    <form class="form-inline" th:action="@{/single-company}" method="post">
+        <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Company ID (0)" name="id" min="1">
         <button type="submit" class="btn btn-primary mb-2">Show</button>
     </form>
     <hr>

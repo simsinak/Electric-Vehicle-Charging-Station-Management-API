@@ -23,6 +23,7 @@ import java.util.List;
 public class UICompanyService {
 
     private final String getAllCompaniesURI="/api/companies?page={page}&limit={limit}";
+    private final String getSingleCompanyURI="/api/companies/{id}";
     private final static String UNKNOWN_ERROR = "An Unknown Error Happened! Please Try Again Later.";
 
 
@@ -51,6 +52,24 @@ public class UICompanyService {
         }
 
     }
+
+    public boolean getSingleCompany(HttpServletRequest request,Model model , RedirectAttributes redirectAttributes , int id) throws IOException {
+        String uri = makeUrl(request,getSingleCompanyURI);
+        ResponseEntity<String> response = restTemplate.getForEntity(uri , String.class, id);
+        String responseText = response.getBody();
+        if (response.getStatusCode()== HttpStatus.OK) {
+            Company company=objectMapper.readValue(responseText , Company.class);
+            model.addAttribute("company", company);
+            return true;
+        }else {
+            JsonNode node = objectMapper.readTree(responseText).get("message");
+            if (node!=null) redirectAttributes.addFlashAttribute("error",node.asText());
+            else redirectAttributes.addFlashAttribute("error",UNKNOWN_ERROR);
+            return false;
+        }
+
+    }
+
 
     private String makeUrl(HttpServletRequest request, String uri){
         return request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+uri;
