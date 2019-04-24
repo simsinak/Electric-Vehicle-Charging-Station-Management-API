@@ -23,6 +23,7 @@ public class UICompanyService {
 
     private final String getAllCompaniesURI="/api/companies?page={page}&limit={limit}";
     private final String singleCompanyURI="/api/companies/{id}";
+    private final String createCompanyURI="/api/companies";
     private final static String UNKNOWN_ERROR = "An Unknown Error Happened! Please Try Again Later.";
 
 
@@ -52,7 +53,7 @@ public class UICompanyService {
 
     }
 
-    public boolean getSingleCompany(HttpServletRequest request,Model model , RedirectAttributes redirectAttributes , int id) throws IOException {
+    public boolean getSingleCompany(HttpServletRequest request,Model model , RedirectAttributes redirectAttributes , long id) throws IOException {
         String uri = makeUrl(request,singleCompanyURI);
         ResponseEntity<String> response = restTemplate.getForEntity(uri , String.class, id);
         String responseText = response.getBody();
@@ -68,7 +69,7 @@ public class UICompanyService {
         }
 
     }
-    public void deleteSingleCompany(HttpServletRequest request, RedirectAttributes redirectAttributes , int id) throws IOException {
+    public void deleteSingleCompany(HttpServletRequest request, RedirectAttributes redirectAttributes , long id) throws IOException {
         String uri = makeUrl(request,singleCompanyURI);
         ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.DELETE,HttpEntity.EMPTY,String.class,id);
         String responseText = response.getBody();
@@ -78,6 +79,54 @@ public class UICompanyService {
             JsonNode node = objectMapper.readTree(responseText).get("message");
             if (node!=null) redirectAttributes.addFlashAttribute("error",node.asText());
             else redirectAttributes.addFlashAttribute("error",UNKNOWN_ERROR);
+        }
+
+    }
+
+    public boolean updateSingleCompany(HttpServletRequest request,Model model , RedirectAttributes redirectAttributes , long id , String name , Long parentID) throws IOException {
+        String uri = makeUrl(request,singleCompanyURI);
+        HttpHeaders headers=new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_TYPE,MediaType.APPLICATION_JSON_VALUE);
+        Company parentCompany = null;
+        if(parentID!=null) {
+            parentCompany=new Company();
+            parentCompany.setId(parentID);
+        }
+        Company company=new Company(id,name,parentCompany,null,null);
+        HttpEntity<Company> httpEntity=new HttpEntity(company,headers);
+        ResponseEntity<String> response = restTemplate.exchange(uri , HttpMethod.PUT,httpEntity,String.class,id);
+        String responseText = response.getBody();
+        if (response.getStatusCode()== HttpStatus.OK) {
+            return getSingleCompany(request,model,redirectAttributes,id);
+        }else {
+            JsonNode node = objectMapper.readTree(responseText).get("message");
+            if (node!=null) redirectAttributes.addFlashAttribute("error",node.asText());
+            else redirectAttributes.addFlashAttribute("error",UNKNOWN_ERROR);
+            return false;
+        }
+
+    }
+
+    public boolean createSingleCompany(HttpServletRequest request,Model model , RedirectAttributes redirectAttributes , String name , Long parentID) throws IOException {
+        String uri = makeUrl(request,createCompanyURI);
+        Company parentCompany = null;
+        if(parentID!=null) {
+            parentCompany=new Company();
+            parentCompany.setId(parentID);
+        }
+        Company company=new Company(name);
+        company.setParentCompany(parentCompany);
+        ResponseEntity<String> response=restTemplate.postForEntity(uri,company,String.class);
+        String responseText = response.getBody();
+        if (response.getStatusCode()== HttpStatus.OK) {
+            Company cmp=objectMapper.readValue(responseText , Company.class);
+            model.addAttribute("company", cmp);
+            return true;
+        }else {
+            JsonNode node = objectMapper.readTree(responseText).get("message");
+            if (node!=null) redirectAttributes.addFlashAttribute("error",node.asText());
+            else redirectAttributes.addFlashAttribute("error",UNKNOWN_ERROR);
+            return false;
         }
 
     }

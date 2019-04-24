@@ -1,9 +1,11 @@
 package fi.devolon.demo.controller;
 
 
+import fi.devolon.demo.model.Company;
 import fi.devolon.demo.service.UICompanyService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +40,7 @@ public class UIController {
         }
     }
     @PostMapping(value = "/single-company")
-    public String singleCompany(HttpServletRequest request, RedirectAttributes redirectAttributes,Model model , @RequestParam(name="id" , defaultValue = "0") int id) throws IOException {
+    public String singleCompany(HttpServletRequest request, RedirectAttributes redirectAttributes,Model model , @RequestParam(name="id" , defaultValue = "0") long id) throws IOException {
         boolean result=companyService.getSingleCompany(request,model,redirectAttributes,id);
         if (result) {
             return "single-company";
@@ -47,9 +49,26 @@ public class UIController {
         }
     }
     @PostMapping(value = "/delete-company")
-    public String deleteCompany(HttpServletRequest request, RedirectAttributes redirectAttributes , @RequestParam(name="id" , defaultValue = "0") int id) throws IOException {
+    public String deleteCompany(HttpServletRequest request, RedirectAttributes redirectAttributes , @RequestParam(name="id" , defaultValue = "0") long id) throws IOException {
         companyService.deleteSingleCompany(request,redirectAttributes,id);
         return "redirect:/";
-
+    }
+    @PostMapping(value = "/update-company")
+    public String updateCompany(HttpServletRequest request,Model model, RedirectAttributes redirectAttributes , @RequestParam(name="id" , defaultValue = "0") long id, @RequestParam(name="name") String name, @RequestParam(name="parentid" , required = false) Long parentID) throws IOException {
+        boolean result=companyService.updateSingleCompany(request,model,redirectAttributes,id,name,parentID);
+        if (result) {
+            return "single-company";
+        }else {
+            return "redirect:/";
+        }
+    }
+    @PostMapping(value = "/create-company")
+    public String createCompany(HttpServletRequest request,Model model, RedirectAttributes redirectAttributes, @RequestParam(name="name") String name, @RequestParam(name="parentid" , required = false) Long parentID) throws IOException {
+        boolean result=companyService.createSingleCompany(request,model,redirectAttributes,name,parentID);
+        if (result) {
+            return "single-company";
+        }else {
+            return "redirect:/";
+        }
     }
 }

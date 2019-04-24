@@ -34,13 +34,20 @@
     <hr>
     <h2>Update Company</h2>
 
-    <form class="form-inline">
+    <form class="form-inline" th:action="@{/update-company}" method="post">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Company ID" name="id" min="1">
         <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter Company Name" name="name" min="1">
-        <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Parent Company ID" name="parentCompany" min="1">
+        <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Parent Company ID" name="parentid" min="1">
         <button type="submit" class="btn btn-primary mb-2">Update</button>
     </form>
+    <hr>
+    <h2>Create Company</h2>
 
+    <form class="form-inline" th:action="@{/create-company}" method="post">
+        <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter Company Name" name="name" min="1">
+        <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Parent Company ID" name="parentid" min="1">
+        <button type="submit" class="btn btn-primary mb-2">Create</button>
+    </form>
     <hr>
 
     <h1 class="text-info">STATION</h1>
