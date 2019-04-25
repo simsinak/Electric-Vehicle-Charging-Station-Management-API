@@ -24,6 +24,7 @@ public class UIStationService {
     private final String getAllStationsURI="/api/stations?page={page}&limit={limit}";
     private final String singleStationURI="/api/stations/{id}";
     private final String createStationURI="/api/stations";
+    private final String aroundStationURI="/api/stations/around?latitude={latitude}&longitude={longitude}&distance={distance}";
     private final static String UNKNOWN_ERROR = "An Unknown Error Happened! Please Try Again Later.";
 
 
@@ -110,6 +111,20 @@ public class UIStationService {
         if (response.getStatusCode()== HttpStatus.CREATED) {
             station=objectMapper.readValue(responseText , Station.class);
             model.addAttribute("stations", new Station[]{station});
+            return true;
+        }else {
+            return generateErrorMessage(redirectAttributes, responseText);
+        }
+
+    }
+
+    public boolean getAllStationsAround(HttpServletRequest request,Model model , RedirectAttributes redirectAttributes , Double latitude, Double longitude,Double distance) throws IOException {
+        String uri = makeUrl(request,aroundStationURI);
+        ResponseEntity<String> response = restTemplate.getForEntity(uri , String.class,latitude,longitude,distance);
+        String responseText = response.getBody();
+        if (response.getStatusCode()== HttpStatus.OK) {
+            Station[] companies=objectMapper.readValue(responseText , Station[].class);
+            model.addAttribute("stations", companies);
             return true;
         }else {
             return generateErrorMessage(redirectAttributes, responseText);

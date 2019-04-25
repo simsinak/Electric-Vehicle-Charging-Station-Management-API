@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{template/main :: layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>All Companies</title>
+</head>
+<body>
+<section class="col-12">
+    <br>
+    <div class="col col-12">
+        <ul id="myUL">
+            <li><span class="caret" th:text="${company.name+' Company'}"></span>
+    <ul class="nested" th:fragment="fragment_company(company)" th:unless="${#lists.isEmpty(company.subCompanies) and #lists.isEmpty(company.stations)}" >
+        <li th:unless="${#lists.isEmpty(company.stations)}" th:each="st : ${company.stations}" th:inline="text">
+            [[${st.id+' '+st.name+' ('+st.latitude+', '+st.longitude+')'}]]
+        </li>
+        <li th:each="sc : ${company.subCompanies}" th:inline="text">
+            <span th:class="${#lists.isEmpty(sc.subCompanies) and #lists.isEmpty(sc.stations)} ? '' : 'caret'">
+            [[${sc.name+' Company'}]]
+                </span>
+            <ul th:replace="this::fragment_company(${sc})"></ul>
+        </li>
+    </ul>
+            </li>
+        </ul>
+    </div>
+</section>
+</body>
+</html>

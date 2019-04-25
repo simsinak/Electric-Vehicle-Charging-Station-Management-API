@@ -68,9 +68,9 @@ public class StationController {
     }
     @GetMapping("/stations/around")
     @JsonView(View.StationWithDistance.class)
-    public Iterable<Station> getAroundStations(@RequestParam(name = "latitude",defaultValue = "0") @NotNull @DecimalMin(value = "-90", message = "latitude must be greater than or equal to -90") @DecimalMax(value = "+90", message = "latitude must be less than or equal to +90") double slat,
-                                           @RequestParam(name = "longitude",defaultValue = "0")    @NotNull @DecimalMin(value = "-180" , message = "longitude must be greater than or equal to -180") @DecimalMax(value = "+180" , message = "longitude must be less than or equal to +180") double slon,
-                                           @RequestParam(name = "distance",defaultValue = "0") @NotNull  double dist){
+    public Iterable<Station> getAroundStations(@RequestParam(name = "latitude") @NotNull @DecimalMin(value = "-90", message = "latitude must be greater than or equal to -90") @DecimalMax(value = "+90", message = "latitude must be less than or equal to +90") double slat,
+                                           @RequestParam(name = "longitude")    @NotNull @DecimalMin(value = "-180" , message = "longitude must be greater than or equal to -180") @DecimalMax(value = "+180" , message = "longitude must be less than or equal to +180") double slon,
+                                           @RequestParam(name = "distance") @NotNull  double dist){
         return stationService.findAllStationsFromLocationWithDistance(slat, slon , dist);
     }
 

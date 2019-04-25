@@ -134,4 +134,23 @@ public class UIController {
             return "redirect:/";
         }
     }
+
+    @PostMapping(value = "/show-stations")
+    public String showStationsWithDistance(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes, @RequestParam(name = "latitude") Double latitude, @RequestParam(name = "longitude") Double longitude , @RequestParam(name = "distance") Double distance) throws IOException {
+        boolean result = stationService.getAllStationsAround(request, model, redirectAttributes, latitude, longitude,distance);
+        if (result) {
+            return "around-stations";
+        } else {
+            return "redirect:/";
+        }
+    }
+    @PostMapping(value = "/show-company-children")
+    public String showCompanyStations(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes, @RequestParam(name = "id", defaultValue = "0") long id) throws IOException {
+        boolean result = companyService.getAllStations(request, model, redirectAttributes, id);
+        if (result) {
+            return "stations-hierarchal";
+        } else {
+            return "redirect:/";
+        }
+    }
 }

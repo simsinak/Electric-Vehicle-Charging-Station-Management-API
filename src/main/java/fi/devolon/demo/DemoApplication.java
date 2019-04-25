@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
@@ -31,6 +32,10 @@ public class DemoApplication {
     @Bean
     public RestTemplate restTemplate(RestTemplateErrorHandler restTemplateErrorHandler){
         RestTemplate restTemplate = new RestTemplate();
+        HttpComponentsClientHttpRequestFactory requestFactory=new HttpComponentsClientHttpRequestFactory();
+        requestFactory.setConnectTimeout(7000);
+        requestFactory.setReadTimeout(7000);
+        restTemplate.setRequestFactory(requestFactory);
         restTemplate.setErrorHandler(restTemplateErrorHandler);
         return restTemplate;
     }

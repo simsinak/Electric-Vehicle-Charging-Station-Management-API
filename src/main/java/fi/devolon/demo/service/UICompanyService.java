@@ -24,6 +24,7 @@ public class UICompanyService {
     private final String getAllCompaniesURI="/api/companies?page={page}&limit={limit}";
     private final String singleCompanyURI="/api/companies/{id}";
     private final String createCompanyURI="/api/companies";
+    private final String allChildernURI="/api/companies/{id}/stations";
     private final static String UNKNOWN_ERROR = "An Unknown Error Happened! Please Try Again Later.";
 
 
@@ -112,6 +113,20 @@ public class UICompanyService {
         if (response.getStatusCode()== HttpStatus.CREATED) {
             Company cmp=objectMapper.readValue(responseText , Company.class);
             model.addAttribute("company", cmp);
+            return true;
+        }else {
+            return generateErrorMessage(redirectAttributes, responseText);
+        }
+
+    }
+
+    public boolean getAllStations(HttpServletRequest request,Model model , RedirectAttributes redirectAttributes , long id) throws IOException {
+        String uri = makeUrl(request,allChildernURI);
+        ResponseEntity<String> response = restTemplate.getForEntity(uri , String.class, id);
+        String responseText = response.getBody();
+        if (response.getStatusCode()== HttpStatus.OK) {
+            Company company=objectMapper.readValue(responseText , Company.class);
+            model.addAttribute("company", company);
             return true;
         }else {
             return generateErrorMessage(redirectAttributes, responseText);

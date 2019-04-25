@@ -4,29 +4,27 @@
     <title>main</title>
 </head>
 <body>
-<section class="text-center">
+<section class="text-center col-12">
     <div th:if="${error}" class="alert alert-warning" role="alert" th:text="${error}"> </div>
-    <h1 class="text-info">COMPANY</h1>
+    <h1 class="text-info jumbotron">COMPANY</h1>
     <hr>
     <h2>Show All Companies</h2>
-
-    <form class="form-inline" th:action="@{/all-companies}" th:method="post">
+    <form class="form-inline mx-auto d-block" th:action="@{/all-companies}" th:method="post">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Page Number (0)" name="page" min="0">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Size Number (30)" name="limit" min="1">
-        <button type="submit" class="btn btn-primary mb-2">Show</button>
+        <button type="submit" class="btn btn-success mb-2">Show</button>
     </form>
-
     <hr>
     <h2>Show Specific Company</h2>
 
-    <form class="form-inline" th:action="@{/single-company}" method="post">
+    <form class="form-inline mx-auto d-block" th:action="@{/single-company}" method="post">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Company ID (0)" name="id" min="1">
-        <button type="submit" class="btn btn-primary mb-2">Show</button>
+        <button type="submit" class="btn btn-success mb-2">Show</button>
     </form>
     <hr>
     <h2>Delete Company</h2>
 
-    <form class="form-inline" th:action="@{/delete-company}" method="post">
+    <form class="form-inline mx-auto d-block" th:action="@{/delete-company}" method="post">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Company ID (0)" name="id" min="1">
         <button type="submit" class="btn btn-danger mb-2">Delete</button>
     </form>
@@ -34,7 +32,7 @@
     <hr>
     <h2>Update Company</h2>
 
-    <form class="form-inline" th:action="@{/update-company}" method="post">
+    <form class="form-inline mx-auto d-block" th:action="@{/update-company}" method="post">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Company ID" name="id" min="1">
         <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter Company Name" name="name" min="1">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Parent Company ID" name="parentid" min="1">
@@ -43,37 +41,37 @@
     <hr>
     <h2>Create Company</h2>
 
-    <form class="form-inline" th:action="@{/create-company}" method="post">
+    <form class="form-inline mx-auto d-block" th:action="@{/create-company}" method="post">
         <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter Company Name" name="name" min="1">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Parent Company ID" name="parentid" min="1">
         <button type="submit" class="btn btn-primary mb-2">Create</button>
     </form>
     <hr>
 
-    <h1 class="text-info">STATION</h1>
+    <h1 class="text-info jumbotron">STATION</h1>
     <hr>
     <h2>Show All Stations</h2>
-    <form class="form-inline" th:action="@{/all-stations}" method="post">
+    <form class="form-inline mx-auto d-block" th:action="@{/all-stations}" method="post">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Page Number (0)" name="page" min="0">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Size Number (30)" name="limit" min="1">
-        <button type="submit" class="btn btn-primary mb-2">Show</button>
+        <button type="submit" class="btn btn-success mb-2">Show</button>
     </form>
     <hr>
     <h2>Show Specific Station</h2>
-    <form class="form-inline" th:action="@{/single-station}" method="post">
+    <form class="form-inline mx-auto d-block" th:action="@{/single-station}" method="post">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Station ID" name="id" min="1">
-        <button type="submit" class="btn btn-primary mb-2">Show</button>
+        <button type="submit" class="btn btn-success mb-2">Show</button>
     </form>
     <hr>
     <h2>Delete Station</h2>
-    <form class="form-inline" th:action="@{/delete-station}" method="post">
+    <form class="form-inline mx-auto d-block" th:action="@{/delete-station}" method="post">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Station ID" name="id" min="1">
         <button type="submit" class="btn btn-danger mb-2">Delete</button>
     </form>
 
     <hr>
     <h2>Update Station</h2>
-    <form class="form-inline" th:action="@{/update-station}" method="post">
+    <form class="form-inline mx-auto d-block" th:action="@{/update-station}" method="post">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Station ID" name="id" min="1">
         <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter Station Name" name="name">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Station Latitude" name="latitude" step="0.000001">
@@ -83,7 +81,7 @@
     </form>
     <hr>
     <h2>Create Station</h2>
-    <form class="form-inline" th:action="@{/create-station}" method="post">
+    <form class="form-inline mx-auto d-block" th:action="@{/create-station}" method="post">
         <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter Station Name" name="name">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Station Latitude" name="latitude" step="0.000001">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Station Longitude" name="longitude" step="0.000001">
@@ -92,7 +90,7 @@
     </form>
     <hr>
     <h2>Patch Station</h2>
-    <form class="form-inline" th:action="@{/patch-station}" method="post">
+    <form class="form-inline mx-auto d-block" th:action="@{/patch-station}" method="post">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Station ID" name="id" min="1">
         <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter Station Name" name="name">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Station Latitude" name="latitude" step="0.000001">
@@ -101,18 +99,35 @@
     </form>
     <hr>
     <h2>Show All Stations in a Distance</h2>
-    <form class="form-inline">
-        <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Distance" name="distance" min="1">
-        <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter Your Latitude" name="name">
-        <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter Your Longitude" name="name">
-        <button type="submit" class="btn btn-primary mb-2">Show</button>
+    <form class="form-inline mx-auto d-block" th:action="@{/show-stations}" method="post">
+        <i class="fas fa-search-location btn" onclick="getLocation()"></i>
+        <input type="number" class="form-control mb-2 mr-sm-2" id="latitude" placeholder="Enter Your Latitude" name="latitude" step="0.000001">
+        <input type="number" class="form-control mb-2 mr-sm-2" id="longitude" placeholder="Enter Your Longitude" name="longitude" step="0.000001">
+        <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Distance" name="distance" min="1" step="0.1">
+        <button type="submit" class="btn btn-success mb-2">Show</button>
     </form>
     <hr>
     <h2>Show All Stations in a Hierarchy</h2>
-    <form class="form-inline">
+    <form class="form-inline mx-auto d-block" th:action="@{/show-company-children}" method="post">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Company ID" name="id" min="1">
-        <button type="submit" class="btn btn-primary mb-2">Show</button>
+        <button type="submit" class="btn btn-success mb-2">Show</button>
     </form>
+    <script>
+        var x = document.getElementById("latitude");
+        var y = document.getElementById("longitude");
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            }else{
+                alert("your browser does not support Geo")
+            }
+        }
+        function showPosition(position) {
+            x.value = position.coords.latitude;
+            y.value = position.coords.longitude;
+        }
+    </script>
 </section>
 </body>
 </html>

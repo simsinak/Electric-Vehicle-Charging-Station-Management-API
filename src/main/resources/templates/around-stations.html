@@ -13,6 +13,7 @@
             <th>Name</th>
             <th>Latitude</th>
             <th>Longitude</th>
+            <th>Distance</th>
             <th>Company ID</th>
             <th>Company Name</th>
         </tr>
@@ -24,26 +25,13 @@
                 <td th:text="${station.name}">Name</td>
                 <td th:text="${station.latitude}">Name</td>
                 <td th:text="${station.longitude}">Name</td>
+                <td th:text="${station.distance}+' km'">Name</td>
                 <td th:text="${station.company.id}">Name</td>
                 <td th:text="${station.company.name}">Name</td>
             </tr>
             </tbody>
         </div>
     </table>
-    <nav aria-label="Page navigation">
-        <ul class="pagination align-content-center" >
-            <li th:if="${prev}" class="page-item">
-                <form method="post" th:action="${prev}">
-                    <button type="submit" class="btn btn-info">&laquo;</button>
-                </form>
-            </li>
-            <li th:if="${next}" class="page-item">
-            <form method="post" th:action="${next}">
-                <button type="submit" class="btn btn-info">&raquo;</button>
-            </form>
-            </li>
-        </ul>
-    </nav>
     <hr>
     <form method="get" action="/">
         <button type="submit" class="btn btn-link">go to home</button>

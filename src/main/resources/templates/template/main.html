@@ -5,18 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/webjars/font-awesome/5.8.1/css/all.min.css}">
+    <style>
+        ul, #myUL {
+            list-style-type: none;
+        }
+
+        #myUL {
+            margin: 0;
+            padding: 0;
+        }
+
+        .caret {
+            cursor: pointer;
+            -webkit-user-select: none; /* Safari 3.1+ */
+            -moz-user-select: none; /* Firefox 2+ */
+            -ms-user-select: none; /* IE 10+ */
+            user-select: none;
+        }
+
+        .caret::before {
+            content: "\25B6";
+            color: black;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .caret-down::before {
+            -ms-transform: rotate(90deg); /* IE 9 */
+            -webkit-transform: rotate(90deg); /* Safari */'
+        transform: rotate(90deg);
+        }
+
+        .nested {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+    </style>
     <title>main</title>
 
 </head>
 <body>
 <div class="container-fluid text-center align-items-center">
-    <div th:insert="template/header :: navbar"></div>
-    <div th:replace="${content}"></div>
-    <div th:insert="template/footer :: copyright"></div>
+    <div class="row">
+    <div class="col-12" th:insert="template/header :: navbar"></div>
+    <div class="col-12" th:replace="${content}"></div>
+    <div class="col-12" th:insert="template/footer :: copyright"></div>
+    </div>
 </div>
+<script>
+    var toggler = document.getElementsByClassName("caret");
+    var i;
 
+    for (i = 0; i < toggler.length; i++) {
+        toggler[i].addEventListener("click", function() {
+            this.parentElement.querySelector(".nested").classList.toggle("active");
+            this.classList.toggle("caret-down");
+        });
+    }
+</script>
 <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/1.14.7/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+
 </body>
 </html>
