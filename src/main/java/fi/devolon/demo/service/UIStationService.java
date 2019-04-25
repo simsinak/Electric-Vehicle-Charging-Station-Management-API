@@ -3,6 +3,7 @@ package fi.devolon.demo.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fi.devolon.demo.controller.ControllerUtility;
+import fi.devolon.demo.model.Company;
 import fi.devolon.demo.model.Station;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,74 +47,75 @@ public class UIStationService {
 
     }
 
-//    public boolean getSingleCompany(HttpServletRequest request,Model model , RedirectAttributes redirectAttributes , long id) throws IOException {
-//        String uri = makeUrl(request,singleCompanyURI);
-//        ResponseEntity<String> response = restTemplate.getForEntity(uri , String.class, id);
-//        String responseText = response.getBody();
-//        if (response.getStatusCode()== HttpStatus.OK) {
-//            Company company=objectMapper.readValue(responseText , Company.class);
-//            model.addAttribute("company", company);
-//            return true;
-//        }else {
-//            return generateErrorMessage(redirectAttributes, responseText);
-//        }
-//
-//    }
-//    public void deleteSingleCompany(HttpServletRequest request, RedirectAttributes redirectAttributes , long id) throws IOException {
-//        String uri = makeUrl(request,singleCompanyURI);
-//        ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.DELETE,HttpEntity.EMPTY,String.class,id);
-//        String responseText = response.getBody();
-//        if (response.getStatusCode()== HttpStatus.OK) {
-//            redirectAttributes.addFlashAttribute("error", "The Company Is Deleted If You Do Not Believe It Try to Retrieve It!");
-//        }else {
-//            JsonNode node = objectMapper.readTree(responseText).get("message");
-//            if (node!=null) redirectAttributes.addFlashAttribute("error",node.asText());
-//            else redirectAttributes.addFlashAttribute("error",UNKNOWN_ERROR);
-//        }
-//
-//    }
-//
-//    public boolean updateSingleCompany(HttpServletRequest request,Model model , RedirectAttributes redirectAttributes , long id , String name , Long parentID) throws IOException {
-//        String uri = makeUrl(request,singleCompanyURI);
-//        HttpHeaders headers=new HttpHeaders();
-//        headers.add(HttpHeaders.CONTENT_TYPE,MediaType.APPLICATION_JSON_VALUE);
-//        Company parentCompany = null;
-//        if(parentID!=null) {
-//            parentCompany=new Company();
-//            parentCompany.setId(parentID);
-//        }
-//        Company company=new Company(id,name,parentCompany,null,null);
-//        HttpEntity<Company> httpEntity=new HttpEntity(company,headers);
-//        ResponseEntity<String> response = restTemplate.exchange(uri , HttpMethod.PUT,httpEntity,String.class,id);
-//        String responseText = response.getBody();
-//        if (response.getStatusCode()== HttpStatus.OK) {
-//            return getSingleCompany(request,model,redirectAttributes,id);
-//        }else {
-//            return generateErrorMessage(redirectAttributes, responseText);
-//        }
-//
-//    }
-//
-//    public boolean createSingleCompany(HttpServletRequest request,Model model , RedirectAttributes redirectAttributes , String name , Long parentID) throws IOException {
-//        String uri = makeUrl(request,createCompanyURI);
-//        Company parentCompany = null;
-//        if(parentID!=null) {
-//            parentCompany=new Company();
-//            parentCompany.setId(parentID);
-//        }
-//        Company company=new Company(name);
-//        company.setParentCompany(parentCompany);
-//        ResponseEntity<String> response=restTemplate.postForEntity(uri,company,String.class);
-//        String responseText = response.getBody();
-//        if (response.getStatusCode()== HttpStatus.OK) {
-//            Company cmp=objectMapper.readValue(responseText , Company.class);
-//            model.addAttribute("company", cmp);
-//            return true;
-//        }else {
-//            return generateErrorMessage(redirectAttributes, responseText);
-//        }
-//
-//    }
+    public boolean getSingleStation(HttpServletRequest request,Model model , RedirectAttributes redirectAttributes , long id) throws IOException {
+        String uri = makeUrl(request,singleStationURI);
+        ResponseEntity<String> response = restTemplate.getForEntity(uri , String.class, id);
+        String responseText = response.getBody();
+        if (response.getStatusCode()== HttpStatus.OK) {
+            Station station=objectMapper.readValue(responseText , Station.class);
+            model.addAttribute("stations", new Station[]{station});
+            return true;
+        }else {
+            return generateErrorMessage(redirectAttributes, responseText);
+        }
+
+    }
+    public void deleteSingleStation(HttpServletRequest request, RedirectAttributes redirectAttributes , long id) throws IOException {
+        String uri = makeUrl(request,singleStationURI);
+        ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.DELETE,HttpEntity.EMPTY,String.class,id);
+        String responseText = response.getBody();
+        if (response.getStatusCode()== HttpStatus.OK) {
+            redirectAttributes.addFlashAttribute("error", "The Station Is Deleted If You Do Not Believe It Try to Retrieve It!");
+        }else {
+            JsonNode node = objectMapper.readTree(responseText).get("message");
+            if (node!=null) redirectAttributes.addFlashAttribute("error",node.asText());
+            else redirectAttributes.addFlashAttribute("error",UNKNOWN_ERROR);
+        }
+
+    }
+
+    public boolean updateSingleStation(HttpServletRequest request,Model model , RedirectAttributes redirectAttributes , long id , String name ,Double latitude, Double longitude ,Long companyID,HttpMethod httpMethod) throws IOException {
+        String uri = makeUrl(request,singleStationURI);
+        HttpHeaders headers=new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_TYPE,MediaType.APPLICATION_JSON_VALUE);
+        Company company = null;
+        if(companyID!=null) {
+            company=new Company();
+            company.setId(companyID);
+        }
+        Station station=new Station(id,name==""?null:name,latitude,longitude,company,0);
+        HttpEntity<Company> httpEntity=new HttpEntity(station,headers);
+        ResponseEntity<String> response = restTemplate.exchange(uri , httpMethod,httpEntity,String.class,id);
+        String responseText = response.getBody();
+        if (response.getStatusCode()== HttpStatus.OK) {
+            station=objectMapper.readValue(responseText , Station.class);
+            model.addAttribute("stations", new Station[]{station});
+            return true;
+        }else {
+            return generateErrorMessage(redirectAttributes, responseText);
+        }
+
+    }
+
+    public boolean createSingleStation(HttpServletRequest request,Model model , RedirectAttributes redirectAttributes , String name ,Double latitude, Double longitude ,Long companyID) throws IOException {
+        String uri = makeUrl(request,createStationURI);
+        Company company = null;
+        if(companyID!=null) {
+            company=new Company();
+            company.setId(companyID);
+        }
+        Station station=new Station(null,name,latitude,longitude,company,0);
+        ResponseEntity<String> response=restTemplate.postForEntity(uri,station,String.class);
+        String responseText = response.getBody();
+        if (response.getStatusCode()== HttpStatus.CREATED) {
+            station=objectMapper.readValue(responseText , Station.class);
+            model.addAttribute("stations", new Station[]{station});
+            return true;
+        }else {
+            return generateErrorMessage(redirectAttributes, responseText);
+        }
+
+    }
 
     private boolean generateErrorMessage(RedirectAttributes redirectAttributes, String responseText) throws IOException {
         JsonNode node = objectMapper.readTree(responseText).get("message");

@@ -60,35 +60,43 @@
     </form>
     <hr>
     <h2>Show Specific Station</h2>
-    <form class="form-inline">
+    <form class="form-inline" th:action="@{/single-station}" method="post">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Station ID" name="id" min="1">
         <button type="submit" class="btn btn-primary mb-2">Show</button>
     </form>
     <hr>
     <h2>Delete Station</h2>
-    <form class="form-inline">
+    <form class="form-inline" th:action="@{/delete-station}" method="post">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Station ID" name="id" min="1">
         <button type="submit" class="btn btn-danger mb-2">Delete</button>
     </form>
 
     <hr>
     <h2>Update Station</h2>
-    <form class="form-inline">
+    <form class="form-inline" th:action="@{/update-station}" method="post">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Station ID" name="id" min="1">
         <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter Station Name" name="name">
-        <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter Station Latitude" name="name">
-        <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter Station Longitude" name="name">
-        <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Company ID" name="name" min="1">
+        <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Station Latitude" name="latitude" step="0.000001">
+        <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Station Longitude" name="longitude" step="0.000001">
+        <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Company ID" name="companyid" min="1">
         <button type="submit" class="btn btn-primary mb-2">Update</button>
     </form>
     <hr>
+    <h2>Create Station</h2>
+    <form class="form-inline" th:action="@{/create-station}" method="post">
+        <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter Station Name" name="name">
+        <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Station Latitude" name="latitude" step="0.000001">
+        <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Station Longitude" name="longitude" step="0.000001">
+        <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Company ID" name="companyid" min="1">
+        <button type="submit" class="btn btn-primary mb-2">Create</button>
+    </form>
+    <hr>
     <h2>Patch Station</h2>
-    <form class="form-inline">
+    <form class="form-inline" th:action="@{/patch-station}" method="post">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Station ID" name="id" min="1">
         <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter Station Name" name="name">
-        <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter Station Latitude" name="name">
-        <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter Station Longitude" name="name">
-        <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Company ID" name="name" min="1">
+        <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Station Latitude" name="latitude" step="0.000001">
+        <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Station Longitude" name="longitude" step="0.000001">
         <button type="submit" class="btn btn-primary mb-2">Patch</button>
     </form>
     <hr>

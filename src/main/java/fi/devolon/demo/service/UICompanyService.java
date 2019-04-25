@@ -45,10 +45,7 @@ public class UICompanyService {
 
             return true;
         }else {
-            JsonNode node = objectMapper.readTree(responseText).get("message");
-            if (node!=null) redirectAttributes.addFlashAttribute("error",node.asText());
-            else redirectAttributes.addFlashAttribute("error",UNKNOWN_ERROR);
-            return false;
+            return generateErrorMessage(redirectAttributes, responseText);
         }
 
     }
@@ -62,10 +59,7 @@ public class UICompanyService {
             model.addAttribute("company", company);
             return true;
         }else {
-            JsonNode node = objectMapper.readTree(responseText).get("message");
-            if (node!=null) redirectAttributes.addFlashAttribute("error",node.asText());
-            else redirectAttributes.addFlashAttribute("error",UNKNOWN_ERROR);
-            return false;
+            return generateErrorMessage(redirectAttributes, responseText);
         }
 
     }
@@ -99,10 +93,7 @@ public class UICompanyService {
         if (response.getStatusCode()== HttpStatus.OK) {
             return getSingleCompany(request,model,redirectAttributes,id);
         }else {
-            JsonNode node = objectMapper.readTree(responseText).get("message");
-            if (node!=null) redirectAttributes.addFlashAttribute("error",node.asText());
-            else redirectAttributes.addFlashAttribute("error",UNKNOWN_ERROR);
-            return false;
+            return generateErrorMessage(redirectAttributes, responseText);
         }
 
     }
@@ -118,20 +109,22 @@ public class UICompanyService {
         company.setParentCompany(parentCompany);
         ResponseEntity<String> response=restTemplate.postForEntity(uri,company,String.class);
         String responseText = response.getBody();
-        if (response.getStatusCode()== HttpStatus.OK) {
+        if (response.getStatusCode()== HttpStatus.CREATED) {
             Company cmp=objectMapper.readValue(responseText , Company.class);
             model.addAttribute("company", cmp);
             return true;
         }else {
-            JsonNode node = objectMapper.readTree(responseText).get("message");
-            if (node!=null) redirectAttributes.addFlashAttribute("error",node.asText());
-            else redirectAttributes.addFlashAttribute("error",UNKNOWN_ERROR);
-            return false;
+            return generateErrorMessage(redirectAttributes, responseText);
         }
 
     }
 
-
+    private boolean generateErrorMessage(RedirectAttributes redirectAttributes, String responseText) throws IOException {
+        JsonNode node = objectMapper.readTree(responseText).get("message");
+        if (node != null) redirectAttributes.addFlashAttribute("error", node.asText());
+        else redirectAttributes.addFlashAttribute("error", UNKNOWN_ERROR);
+        return false;
+    }
     private String makeUrl(HttpServletRequest request, String uri){
         return request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+uri;
     }
