@@ -70,9 +70,10 @@ public class StationService implements BasicRestService<Station> {
                 String name = map.get("name");
                 String latitude = map.get("latitude");
                 String longitude = map.get("longitude");
-                if (name != null)
-                    if (name.length()>1) station.setName(name);
+                if (name != null) {
+                    if (name.length() > 1) station.setName(name);
                     else throw new IllegalArgumentException("Station Name Must be Greater Than One Character");
+                }
                 if (latitude != null){
                     try {
                         double latitudeDoubleValue = Double.parseDouble(latitude);
