@@ -56,10 +56,10 @@ public class CompanyController {
 
     }
     @PostMapping("/companies")
-    @ResponseStatus(HttpStatus.CREATED)
     public void newCompany(@Validated @RequestBody Company company, HttpServletResponse response)  throws IOException{
         company =companyService.save(company);
         response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+        response.setStatus(HttpStatus.CREATED.value());
         new ObjectMapper().registerModule(new SimpleModule().addSerializer(company.getClass(),new SingleCompanySerializer())).writeValue(response.getWriter() , company);
 
     }
