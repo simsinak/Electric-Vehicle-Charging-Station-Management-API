@@ -1,7 +1,6 @@
 package fi.devolon.demo.controller;
 
 
-import fi.devolon.demo.model.Company;
 import fi.devolon.demo.service.UICompanyService;
 import fi.devolon.demo.service.UIStationService;
 import lombok.AllArgsConstructor;
@@ -100,7 +99,7 @@ public class UIController {
     }
 
     @PostMapping(value = "/delete-station")
-    public String deleteSttion(HttpServletRequest request, RedirectAttributes redirectAttributes, @RequestParam(name = "id", defaultValue = "0") long id) throws IOException {
+    public String deleteStation(HttpServletRequest request, RedirectAttributes redirectAttributes, @RequestParam(name = "id", defaultValue = "0") long id) throws IOException {
         stationService.deleteSingleStation(request, redirectAttributes, id);
         return "redirect:/";
     }

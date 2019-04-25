@@ -84,7 +84,7 @@ public class UIStationService {
             company=new Company();
             company.setId(companyID);
         }
-        Station station=new Station(id,name==""?null:name,latitude,longitude,company,0);
+        Station station=new Station(id,name.isEmpty()?null:name,latitude,longitude,company,0);
         HttpEntity<Company> httpEntity=new HttpEntity(station,headers);
         ResponseEntity<String> response = restTemplate.exchange(uri , httpMethod,httpEntity,String.class,id);
         String responseText = response.getBody();

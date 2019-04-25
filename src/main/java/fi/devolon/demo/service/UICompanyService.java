@@ -24,7 +24,7 @@ public class UICompanyService {
     private final String getAllCompaniesURI="/api/companies?page={page}&limit={limit}";
     private final String singleCompanyURI="/api/companies/{id}";
     private final String createCompanyURI="/api/companies";
-    private final String allChildernURI="/api/companies/{id}/stations";
+    private final String allChildrenURI="/api/companies/{id}/stations";
     private final static String UNKNOWN_ERROR = "An Unknown Error Happened! Please Try Again Later.";
 
 
@@ -88,7 +88,7 @@ public class UICompanyService {
             parentCompany.setId(parentID);
         }
         Company company=new Company(id,name,parentCompany,null,null);
-        HttpEntity<Company> httpEntity=new HttpEntity(company,headers);
+        HttpEntity<Company> httpEntity=new HttpEntity<>(company,headers);
         ResponseEntity<String> response = restTemplate.exchange(uri , HttpMethod.PUT,httpEntity,String.class,id);
         String responseText = response.getBody();
         if (response.getStatusCode()== HttpStatus.OK) {
@@ -121,7 +121,7 @@ public class UICompanyService {
     }
 
     public boolean getAllStations(HttpServletRequest request,Model model , RedirectAttributes redirectAttributes , long id) throws IOException {
-        String uri = makeUrl(request,allChildernURI);
+        String uri = makeUrl(request,allChildrenURI);
         ResponseEntity<String> response = restTemplate.getForEntity(uri , String.class, id);
         String responseText = response.getBody();
         if (response.getStatusCode()== HttpStatus.OK) {
