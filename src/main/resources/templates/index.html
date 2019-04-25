@@ -53,7 +53,7 @@
     <h1 class="text-info">STATION</h1>
     <hr>
     <h2>Show All Stations</h2>
-    <form class="form-inline">
+    <form class="form-inline" th:action="@{/all-stations}" method="post">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Page Number (0)" name="page" min="0">
         <input type="number" class="form-control mb-2 mr-sm-2" placeholder="Enter Size Number (30)" name="limit" min="1">
         <button type="submit" class="btn btn-primary mb-2">Show</button>

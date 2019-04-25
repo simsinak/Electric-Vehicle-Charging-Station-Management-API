@@ -3,6 +3,7 @@ package fi.devolon.demo.controller;
 
 import fi.devolon.demo.model.Company;
 import fi.devolon.demo.service.UICompanyService;
+import fi.devolon.demo.service.UIStationService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -22,6 +23,7 @@ public class UIController {
 
 
     UICompanyService companyService;
+    UIStationService stationService;
 
 
     @GetMapping("/")
@@ -67,6 +69,18 @@ public class UIController {
         boolean result=companyService.createSingleCompany(request,model,redirectAttributes,name,parentID);
         if (result) {
             return "single-company";
+        }else {
+            return "redirect:/";
+        }
+    }
+
+
+
+    @PostMapping(value = "/all-stations")
+    public String allStations(HttpServletRequest request, @RequestParam(name = "page",defaultValue = "0") int page, @RequestParam(name = "limit",defaultValue = "30") int limit, RedirectAttributes redirectAttributes,Model model) throws IOException {
+        boolean result=stationService.getAllStations(request,model,redirectAttributes,page,limit);
+        if (result) {
+            return "all-stations";
         }else {
             return "redirect:/";
         }
