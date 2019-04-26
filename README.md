@@ -27,7 +27,7 @@ $ localhost:8080
   - It is for test so, we used H2 DB
   - API URI starts with /api
   - UI starts with /
-  
+  - The DB schema did not changed!
   
  | Method | path | purpose|
 | ------ | ------ |------|
