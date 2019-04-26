@@ -50,7 +50,6 @@ public class AllCompaniesSerializer extends JsonSerializer<Iterable> {
                 values.put("subCompanies",subCompaniesArray);
             }
             data.add(values);
-
         });
         Object[] result = new Object[data.size()];
         result=data.toArray(result);
