@@ -11,11 +11,13 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 import java.util.Optional;
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
+@Transactional
 public class StationService implements BasicRestService<Station> {
 
     StationRepository stationRepository;
