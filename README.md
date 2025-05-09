@@ -1,6 +1,6 @@
 # REST API DEVOLON TASK
 powered by bootstrap
-[![](https://user-images.githubusercontent.com/33158051/103466606-760a4000-4d14-11eb-9941-2f3d00371471.png)](https://spring.io/)[![](https://avatars0.githubusercontent.com/u/5429470?s=200&v=4)](https://docker.com)
+[<img src="[https://your-image-url.type](https://user-images.githubusercontent.com/33158051/103466606-760a4000-4d14-11eb-9941-2f3d00371471.png)" width="100" height="100">](https://spring.io/)[![](https://avatars0.githubusercontent.com/u/5429470?s=200&v=4)](https://docker.com)
 
 This is the result!
 You can download the Docker Image or the Jar file from the following link
